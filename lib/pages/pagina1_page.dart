@@ -8,53 +8,55 @@ class Pagina1Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usuarioService = Provider.of<UsuarioService>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pagina 1'),
+        title: Text('Pagina 1'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () => usuarioService.removerUsuario())
+        ],
       ),
       body: usuarioService.existeUsuario
-          ? informacionUsuario(usuario: usuarioService.usuario)
-          : const Center(
-              child: Text('No hay usuario seleccionado'),
-            ),
+          ? InformacionUsuario(usuarioService.usuario!)
+          : Center(child: Text('No hay usuario seleccionado')),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.accessibility_new),
-        onPressed: () => Navigator.pushReplacementNamed(context, 'pagina2'),
-      ),
+          child: Icon(Icons.accessibility_new),
+          onPressed: () => Navigator.pushNamed(context, 'pagina2')),
     );
   }
 }
 
-class informacionUsuario extends StatelessWidget {
+class InformacionUsuario extends StatelessWidget {
   final Usuario usuario;
-  const informacionUsuario({
-    required this.usuario,
-  });
+
+  const InformacionUsuario(this.usuario);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('General',
+          Text('General',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const Divider(),
+          Divider(),
+
           ListTile(title: Text('Nombre: ${usuario.nombre}')),
-          ListTile(title: Text('Edad: ${usuario.nombre}')),
-          const Text('Profesiones',
+          ListTile(title: Text('Edad: ${usuario.edad}')),
+
+          Text('Profesiones',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const Divider(),
+          Divider(),
+
           ...usuario.profesiones!
               .map((profesion) => ListTile(title: Text(profesion)))
               .toList()
-
-          /*const ListTile(
-            title: Text('Profesión 1: '),
-          ),*/
+          // ListTile( title: Text('Profesion 1') ),
         ],
       ),
     );
