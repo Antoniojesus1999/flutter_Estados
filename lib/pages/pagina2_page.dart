@@ -9,6 +9,7 @@ class Pagina2Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usuarioCubit = context.read<UsuarioCubit>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pagina 2'),
@@ -18,33 +19,34 @@ class Pagina2Page extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           MaterialButton(
+              child: Text('Establecer Usuario',
+                  style: TextStyle(color: Colors.white)),
               color: Colors.blue,
               onPressed: () {
-                final user = Usuario(
-                    edad: 23,
-                    nombre: 'Antonio Jesús',
-                    profesiones: ['Full develop', 'Back Expert']);
+                final newUser = new Usuario(
+                    nombre: 'Fernando Herrera',
+                    edad: 34,
+                    profesiones: [
+                      'FullStack Developer',
+                      'Videojugador Veterano'
+                    ]);
 
-                usuarioCubit.seleccionarUsuario(user);
-              },
-              child: const Text(
-                'Establecer Usuario',
-                style: TextStyle(color: Colors.white),
-              )),
+                usuarioCubit.seleccionarUsuario(newUser);
+              }),
           MaterialButton(
+              child:
+                  Text('Cambiar Edad', style: TextStyle(color: Colors.white)),
               color: Colors.blue,
-              onPressed: () {},
-              child: const Text(
-                'Cambiar Edad',
-                style: TextStyle(color: Colors.white),
-              )),
+              onPressed: () {
+                usuarioCubit.cambiarEdad(30);
+              }),
           MaterialButton(
+              child: Text('Añadir Profesion',
+                  style: TextStyle(color: Colors.white)),
               color: Colors.blue,
-              onPressed: () {},
-              child: const Text(
-                'Añadir Profesion',
-                style: TextStyle(color: Colors.white),
-              ))
+              onPressed: () {
+                usuarioCubit.agregarProfesion();
+              }),
         ],
       )),
     );
